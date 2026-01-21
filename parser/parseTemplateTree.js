@@ -1,6 +1,6 @@
 // server/parser/parseTemplateTree.js
 
-export function parseTemplateTree(templateJson, filename = 'template.json') {
+export function parseTemplateTree(templateJson, filename = "template.json") {
   const sectionsMap = templateJson.sections || {};
   const order = Array.isArray(templateJson.order)
     ? templateJson.order
@@ -9,7 +9,7 @@ export function parseTemplateTree(templateJson, filename = 'template.json') {
   return {
     label: filename,
     children: order
-      .map(sectionId => {
+      .map((sectionId) => {
         const section = sectionsMap[sectionId];
         if (!section) return null;
 
@@ -17,17 +17,16 @@ export function parseTemplateTree(templateJson, filename = 'template.json') {
 
         return {
           label: sectionId,
-          meta: [
-            section.type,
-            section.disabled ? 'disabled' : null
-          ]
+          disabled: section.disabled === true,
+          meta: [section.type]
             .filter(Boolean)
-            .join(' · '),
-          children: Object.values(blocks).map(block => ({
-            label: block.type || 'unknown'
-          }))
+            .join(" · "),
+          children: Object.values(blocks).map((block) => ({
+            label: block.type || "unknown",
+            disabled: block.disabled === true,
+          })),
         };
       })
-      .filter(Boolean)
+      .filter(Boolean),
   };
 }

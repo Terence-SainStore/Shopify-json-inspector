@@ -169,6 +169,7 @@ header a:hover {
 }
 
 .row:hover {
+  cursor: pointer;
   background: #f6f7f8;
 }
 
@@ -294,7 +295,10 @@ button:hover {
 }
 
 /* hover 高亮（整行） */
-.structure-tree span:hover {
+.structure-tree .tree-label {
+  cursor: pointer;
+}
+.structure-tree .tree-label:hover {
   background: rgba(0, 0, 0, 0.04);
 }
 
@@ -302,4 +306,26 @@ button:hover {
   .section-row {
     grid-template-columns: 1fr;
   }
+}
+
+.tree-node {
+  font-family: monospace;
+  line-height: 1.5;
+}
+
+.tree-prefix {
+  white-space: pre;   /* 只保留前缀的空格 */
+  color: #999;
+}
+
+.tree-meta {
+  opacity: 0.85;
+}
+
+.tree-node.is-disabled {
+  color: #e5484d;
+  font-weight: 600;
+  text-decoration: line-through;
+  display: flex;
+  align-items: center;
 }
