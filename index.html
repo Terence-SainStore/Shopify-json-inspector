@@ -2,12 +2,12 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Shopify OS2 Inspector</title>
+    <title>Shopify Template Inspector</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <header>
-      <h1>Shopify OS2.0 Template Inspector</h1>
+      <h1>Shopify Template Inspector</h1>
       <a href="https://github.com/terenzzzz" target="_blank">@Terence</a>
     </header>
 
@@ -61,6 +61,21 @@
         <h3>提示</h3>
         <p id="modal-message"></p>
         <button id="modal-confirm">知道了</button>
+      </div>
+    </div>
+
+    <!-- Image Preview Modal -->
+    <div id="imageModal" class="image-modal hidden">
+      <span id="modalClose" class="modal-close">&times;</span>
+      <div class="modal-content">
+        <div class="modal-left">
+          <img id="modalImg" src="" alt="Preview" />
+        </div>
+        <div class="modal-right">
+          <div><strong>Name:</strong> <span id="modalName"></span></div>
+          <div><strong>Size:</strong> <span id="modalSize"></span></div>
+          <div><strong>URL:</strong> <span id="modalUrl"></span></div>
+        </div>
       </div>
     </div>
 

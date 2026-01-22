@@ -170,7 +170,7 @@ function renderImages() {
               <div class="thumb">
                 ${
                   src
-                    ? `<img src="${src}" loading="lazy"
+                    ? `<img src="${src}" loading="lazy" data-name="${name}" class="preview-img"
                         onerror="this.style.display='none'" />`
                     : ""
                 }
@@ -195,6 +195,7 @@ function renderImages() {
     </div>
   `;
 
+  // 下载按钮
   const downloadBtn = document.getElementById("download");
   downloadBtn.onclick = async () => {
     downloadBtn.disabled = true;
@@ -210,7 +211,50 @@ function renderImages() {
     downloadBtn.disabled = false;
     downloadBtn.textContent = "Download ZIP";
   };
+
+  // 图片预览 Modal
+  const modal = document.getElementById("imageModal");
+  const modalImg = document.getElementById("modalImg");
+  const modalName = document.getElementById("modalName");
+  const modalSize = document.getElementById("modalSize");
+  const modalUrl = document.getElementById("modalUrl");
+  const modalClose = document.getElementById("modalClose");
+
+  document.querySelectorAll(".preview-img").forEach(img => {
+    img.onclick = async () => {
+      modalImg.src = img.src;
+      modalName.textContent = img.dataset.name || "";
+      modalSize.textContent = "Loading…";
+      modalUrl.innerHTML = `<a href="${img.src}" target="_blank" rel="noopener noreferrer">${img.src}</a>`;
+
+      // 异步获取图片大小
+      try {
+        const res = await fetch(img.src);
+        const blob = await res.blob();
+        modalSize.textContent = `${(blob.size / 1024).toFixed(1)} KB`;
+      } catch (e) {
+        modalSize.textContent = "Unknown";
+      }
+
+      modal.classList.remove("hidden");
+    };
+  });
+
+  // 关闭 Modal
+  modalClose.onclick = () => {
+    modal.classList.add("hidden");
+    modalImg.src = "";
+  };
+
+  modal.onclick = (e) => {
+    if (e.target === modal) {
+      modal.classList.add("hidden");
+      modalImg.src = "";
+    }
+  };
 }
+
+
 
 function updateDownloadProgress(done, total) {
   const wrapper = document.getElementById("download-progress");
