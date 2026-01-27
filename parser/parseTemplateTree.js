@@ -21,9 +21,11 @@ export function parseTemplateTree(templateJson, filename = "template.json") {
           meta: [section.type]
             .filter(Boolean)
             .join(" · "),
+          data: section,
           children: Object.values(blocks).map((block) => ({
             label: block.type || "unknown",
             disabled: block.disabled === true,
+            data: block,
           })),
         };
       })

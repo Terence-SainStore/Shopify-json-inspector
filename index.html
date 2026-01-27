@@ -52,7 +52,7 @@
       <section class="panel result">
         <div id="stats" class="card hidden"></div>
         <div id="images" class="card hidden"></div>
-        <div id="sections" class="card hidden"></div>
+        <div id="sections" class="hidden"></div>
       </section>
     </main>
 
@@ -66,17 +66,40 @@
 
     <!-- Image Preview Modal -->
     <div id="imageModal" class="image-modal hidden">
-      <span id="modalClose" class="modal-close">&times;</span>
       <div class="modal-content">
+        <span id="modalClose" class="modal-close">&times;</span>
         <div class="modal-left">
           <img id="modalImg" src="" alt="Preview" />
         </div>
         <div class="modal-right">
-          <div><strong>Name:</strong> <span id="modalName"></span></div>
-          <div><strong>Size:</strong> <span id="modalSize"></span></div>
-          <div><strong>URL:</strong> <span id="modalUrl"></span></div>
+          <h3>Image Details</h3>
+          
+          <div class="info-item">
+            <span class="info-label">File Name</span>
+            <div class="info-value" id="modalName"></div>
+          </div>
+          
+          <div class="info-item">
+            <span class="info-label">Dimensions</span>
+            <div class="info-value" id="modalDimensions">-</div>
+          </div>
+
+          <div class="info-item">
+            <span class="info-label">File Size</span>
+            <div class="info-value" id="modalSize"></div>
+          </div>
+          
+          <div class="info-item">
+            <span class="info-label">Source URL</span>
+            <div class="info-value" id="modalUrl"></div>
+          </div>
         </div>
       </div>
+    </div>
+
+    <!-- JSON Bubble -->
+    <div id="jsonBubble" class="json-bubble hidden">
+      <pre></pre>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
