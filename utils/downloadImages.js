@@ -33,13 +33,42 @@ export async function downloadImages(
       .replace(/^\/+/, '');
 
     const url = `${cdnPrefix}/${encodeURIComponent(name)}`;
+    const accept = buildAcceptForName(name);
 
     try {
-      const res = await fetch(url);
+      const res = await fetch(url, {
+        headers: {
+          Accept: accept,
+          'Cache-Control': 'no-transform',
+        },
+      });
       if (!res.ok) throw new Error(res.status);
 
-      const blob = await res.blob();
-      folder.file(name, blob);
+      let blob = await res.blob();
+      const expectedMime = mimeForExt(getExtFromFilename(name));
+
+      // 如果 CDN 仍返回与扩展名不一致的 MIME，则尝试带 format 参数重试一次
+      if (expectedMime && blob.type && expectedMime !== blob.type) {
+        const format = extToFormat(getExtFromFilename(name));
+        const retryUrl = url.includes('?') ? `${url}&format=${format}` : `${url}?format=${format}`;
+        try {
+          const retryRes = await fetch(retryUrl, {
+            headers: {
+              Accept: expectedMime,
+              'Cache-Control': 'no-transform',
+            },
+          });
+          if (retryRes.ok) {
+            const retryBlob = await retryRes.blob();
+            if (retryBlob.type === expectedMime) {
+              blob = retryBlob;
+            }
+          }
+        } catch {}
+      }
+
+      const fixedName = keepOriginalOrAddExt(name, blob.type);
+      folder.file(fixedName, blob);
       success++;
     } catch (e) {
       console.warn('❌ 下载失败:', url);
@@ -76,4 +105,73 @@ function normalizeCdnPrefix(prefix) {
   }
 
   return prefix + '/';
+}
+
+function getExtFromFilename(filename) {
+  const i = filename.lastIndexOf('.');
+  if (i === -1) return '';
+  return filename.slice(i).toLowerCase();
+}
+
+function mimeForExt(ext) {
+  switch (ext) {
+    case '.webp':
+      return 'image/webp';
+    case '.jpg':
+    case '.jpeg':
+      return 'image/jpeg';
+    case '.png':
+      return 'image/png';
+    case '.gif':
+      return 'image/gif';
+    default:
+      return '';
+  }
+}
+
+function buildAcceptForName(filename) {
+  const ext = getExtFromFilename(filename);
+  const mime = mimeForExt(ext);
+  if (mime) return `${mime}`;
+  return '*/*';
+}
+
+function keepOriginalOrAddExt(filename, mime) {
+  const ext = getExtFromFilename(filename);
+  if (ext) return filename;
+  const add = getExtFromMime(mime);
+  if (!add) return filename;
+  return filename + add;
+}
+
+function getExtFromMime(mime) {
+  switch (mime) {
+    case 'image/webp':
+      return '.webp';
+    case 'image/jpeg':
+      return '.jpg';
+    case 'image/png':
+      return '.png';
+    case 'image/gif':
+      return '.gif';
+    default:
+      return '';
+  }
+}
+
+function replaceExt(filename, newExt) {
+  const i = filename.lastIndexOf('.');
+  if (i === -1) return filename + newExt;
+  return filename.slice(0, i) + newExt;
+}
+
+function extToFormat(ext) {
+  switch (ext) {
+    case '.webp': return 'webp';
+    case '.jpg':
+    case '.jpeg': return 'jpg';
+    case '.png': return 'png';
+    case '.gif': return 'gif';
+    default: return '';
+  }
 }
