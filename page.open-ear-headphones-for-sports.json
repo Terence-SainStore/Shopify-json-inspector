@@ -1,0 +1,539 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "openear_sport_banner_q6fUGR": {
+      "type": "openear-sport-banner",
+      "name": "Openear Sport Banner",
+      "settings": {
+        "image": "shopify://shop_images/pillar-page-banner.webp",
+        "image_mb": "shopify://shop_images/pillar-page-banner-mb.webp",
+        "title": "Why Sport Enthusiasts<br>Prefer Open-Ear Headphones",
+        "subtitle": "Safer. Secure. Comfortable.",
+        "link_text": "",
+        "link": ""
+      }
+    },
+    "openear_sport_pain_point_3rX7rm": {
+      "type": "openear-sport-pain-point",
+      "blocks": {
+        "point_WkXhr8": {
+          "type": "point",
+          "settings": {
+            "title": "Loose fit",
+            "text": "May loosen in action, causing distraction or loss.",
+            "image": "shopify://shop_images/pillar-page-problem-1.webp",
+            "image_mb": "shopify://shop_images/pillar-page-problem-1-mb.webp"
+          }
+        },
+        "point_CXRmwK": {
+          "type": "point",
+          "settings": {
+            "title": "No awareness",
+            "text": "Blocks crucial sounds like car horns or warning shouts.",
+            "image": "shopify://shop_images/pillar-page-problem-2.webp",
+            "image_mb": "shopify://shop_images/pillar-page-problem-2-mb.webp"
+          }
+        },
+        "point_BD7GB8": {
+          "type": "point",
+          "settings": {
+            "title": "Uncomfortable",
+            "text": "Traps sweat in the ears, causing irritation or infection.",
+            "image": "shopify://shop_images/pillar-page-problem-3.webp",
+            "image_mb": "shopify://shop_images/pillar-page-problem-3-mb.webp"
+          }
+        },
+        "point_qNhJjV": {
+          "type": "point",
+          "settings": {
+            "title": "Glitchy",
+            "text": "Touch controls may fail to work with sweaty hands.",
+            "image": "shopify://shop_images/pillar-page-problem-4.webp",
+            "image_mb": "shopify://shop_images/pillar-page-problem-4-mb.webp"
+          }
+        }
+      },
+      "block_order": [
+        "point_WkXhr8",
+        "point_CXRmwK",
+        "point_BD7GB8",
+        "point_qNhJjV"
+      ],
+      "name": "Openear Sport Pain Point",
+      "settings": {
+        "title": "Issues with Common Sports Headphones"
+      }
+    },
+    "openear_sport_solution_hqXYV8": {
+      "type": "openear-sport-solution",
+      "blocks": {
+        "solution_KUBaCV": {
+          "type": "solution",
+          "settings": {
+            "title": "Snug, secure fit",
+            "text": "Ergonomic ear hooks keep them steady, even when you run and jump.",
+            "image": "shopify://shop_images/pillar-page-solution-1.webp",
+            "image_mb": "shopify://shop_images/pillar-page-solution-1-mb.webp"
+          }
+        },
+        "solution_MFVNcp": {
+          "type": "solution",
+          "settings": {
+            "title": "Open-ear awareness",
+            "text": "Train with music while staying aware of your surroundings.",
+            "image": "shopify://shop_images/pillar-page-solution-2.webp",
+            "image_mb": "shopify://shop_images/pillar-page-solution-2-mb.webp"
+          }
+        },
+        "solution_yTkBjD": {
+          "type": "solution",
+          "settings": {
+            "title": "Breathable by design",
+            "text": "Open-ear headphones keep your ears cool, free of sweat buildup.",
+            "image": "shopify://shop_images/pillar-page-solution-3.webp",
+            "image_mb": "shopify://shop_images/pillar-page-solution-3-mb.webp"
+          }
+        },
+        "solution_fqART6": {
+          "type": "solution",
+          "settings": {
+            "title": "Reliable control",
+            "text": "Physical buttons offer reliable control, even with sweaty fingers.",
+            "image": "shopify://shop_images/pillar-page-solution-4.webp",
+            "image_mb": "shopify://shop_images/pillar-page-solution-4-mb.webp"
+          }
+        }
+      },
+      "block_order": [
+        "solution_KUBaCV",
+        "solution_MFVNcp",
+        "solution_yTkBjD",
+        "solution_fqART6"
+      ],
+      "name": "Openear Sport Solution",
+      "settings": {
+        "title": "Where Shokz Headphones Take an Edge",
+        "subtitle": "Designed with workouts in mind"
+      }
+    },
+    "openear_sport_product_wKAnA7": {
+      "type": "openear-sport-product",
+      "blocks": {
+        "product_Fbzenw": {
+          "type": "product",
+          "settings": {
+            "product": "openrun-pro2",
+            "badge": "Flagship",
+            "disc": "Best running headphones with powerful sound",
+            "button_text": "",
+            "allow_add_cart": true,
+            "background_image": "shopify://shop_images/pillar-page-product-bg-1.webp",
+            "background_image_mb": "shopify://shop_images/pillar-page-product-bg-1-mb.webp",
+            "card_badge": "",
+            "card_badge_bg": "shopify://shop_images/pillar-product-badge-bg.webp"
+          }
+        },
+        "product_3QXYWd": {
+          "type": "product",
+          "settings": {
+            "product": "openswim-pro",
+            "badge": "Bluetooth Headphones",
+            "disc": "Waterproof swimming headphones with standalone playback",
+            "button_text": "",
+            "allow_add_cart": true,
+            "background_image": "shopify://shop_images/pillar-page-product-bg-2.webp",
+            "background_image_mb": "shopify://shop_images/pillar-page-product-bg-2-mb.webp",
+            "card_badge": "",
+            "card_badge_bg": "shopify://shop_images/pillar-product-badge-bg.webp"
+          }
+        },
+        "product_qGNjUN": {
+          "type": "product",
+          "settings": {
+            "product": "openfit2-series",
+            "badge": "Flagship",
+            "disc": "Secure, comfortable fit for long workout sessions",
+            "button_text": "",
+            "allow_add_cart": true,
+            "background_image": "shopify://shop_images/pillar-page-product-bg-3.webp",
+            "background_image_mb": "shopify://shop_images/pillar-page-product-bg-3-mb.webp",
+            "card_badge": "",
+            "card_badge_bg": "shopify://shop_images/pillar-product-badge-bg.webp"
+          }
+        },
+        "product_xDLDzV": {
+          "type": "product",
+          "settings": {
+            "product": "opendots-one",
+            "badge": "Premium",
+            "disc": "Stylish clip-ons that match your training outfit",
+            "button_text": "",
+            "allow_add_cart": true,
+            "background_image": "shopify://shop_images/pillar-page-product-bg-4.webp",
+            "background_image_mb": "shopify://shop_images/pillar-page-product-bg-4-mb.webp",
+            "card_badge": "",
+            "card_badge_bg": "shopify://shop_images/pillar-product-badge-bg.webp"
+          }
+        }
+      },
+      "block_order": [
+        "product_Fbzenw",
+        "product_3QXYWd",
+        "product_qGNjUN",
+        "product_xDLDzV"
+      ],
+      "name": "Openear Sport Product",
+      "settings": {
+        "title": "Choose the Shokz that's RIGHT for You"
+      }
+    },
+    "openear_sport_compare_D9PUdz": {
+      "type": "openear-sport-compare",
+      "blocks": {
+        "product_KG6qMB": {
+          "type": "product",
+          "settings": {
+            "product": "openswim-pro",
+            "product_title": "",
+            "model": "S710",
+            "sound_quality": "8th-Gen bone conduction technology",
+            "weight": "<span>27.3g</span>",
+            "waterproof_rating": "<span>IP68 waterproof for 2m deep swim</span>",
+            "battery_life": "Bluetooth mode: 9 hours on a single charge\nMP3 mode: 6 hours on a single charge",
+            "charging_method": "4-Pin magnetic charging",
+            "equalizer": "2 preset EQs\n(in-App)",
+            "storage": "32 GB",
+            "warranty": "2 years"
+          }
+        },
+        "product_FaGfT7": {
+          "type": "product",
+          "settings": {
+            "product": "openrun-pro2",
+            "product_title": "",
+            "model": "S820",
+            "sound_quality": "<span>10th-Gen bone conduction technology</span>",
+            "weight": "30.3g",
+            "waterproof_rating": "IP55 water resistance for sweaty workouts",
+            "battery_life": "<sapn>12 hours on a single charge</sapn>",
+            "charging_method": "USB-C charging",
+            "equalizer": "<span>4 preset EQs + 2 custom modes\n (in-App)</span>",
+            "storage": "/",
+            "warranty": "2 years"
+          }
+        },
+        "product_r763B8": {
+          "type": "product",
+          "settings": {
+            "product": "openfit2-series",
+            "product_title": "",
+            "model": "T921",
+            "sound_quality": "<span>DualBoost™ + Dolby Audio</span>",
+            "weight": "9.4g per bud",
+            "waterproof_rating": "<span>IP55</span>",
+            "battery_life": "<span>Earbuds: 11 hours, and up to 48 hours with charging case</span>",
+            "charging_method": "USB-C charging",
+            "equalizer": "Dolby Audio mode &amp; 4 presets + 2 custom EQ modes (in-App)",
+            "storage": "/",
+            "warranty": "2 years"
+          }
+        },
+        "product_gtzBz7": {
+          "type": "product",
+          "settings": {
+            "product": "opendots-one",
+            "product_title": "",
+            "model": "E310",
+            "sound_quality": "<span>Bassphere™ + Dolby Audio</span>",
+            "weight": "<span>6.5g per bud</span>",
+            "waterproof_rating": "<span>IP54</span>",
+            "battery_life": "Earbuds: 10 hours, and up to 40 hours with charging case",
+            "charging_method": "USB-C charging",
+            "equalizer": "Dolby Audio mode &amp; 4 presets + 2 custom EQ modes (in-App)",
+            "storage": "/",
+            "warranty": "2 years"
+          }
+        }
+      },
+      "block_order": [
+        "product_KG6qMB",
+        "product_FaGfT7",
+        "product_r763B8",
+        "product_gtzBz7"
+      ],
+      "name": "Openear Sport Compare",
+      "settings": {
+        "title": "",
+        "cell_title": "Product;\nModel;\nSound quality;\nWeight;\nWaterproof rating;\nBattery life;\nCharging method;\nEqualizer;\nStorage;\nWarranty"
+      }
+    },
+    "openear_sport_case_zH3QLw": {
+      "type": "openear-sport-case",
+      "blocks": {
+        "case_JYbYCq": {
+          "type": "case",
+          "settings": {
+            "title": "Helping My Runners Stay Safe and Aware",
+            "text": "\"I learned about Shokz via social media. I am a leader and creator of team Running Locas and I am a huge advocate of being aware of surroundings and safety while running. I encourage my runners to only use Shokz so that they can still hear everything around them while enjoying their music. \"—@Tawnya"
+          }
+        },
+        "case_eB9yxR": {
+          "type": "case",
+          "settings": {
+            "title": "Light As a Feather",
+            "text": "\"The OpenFit Air light as a feather. Running has been a joy since I got them, listening to my favorite music while aware of my surroundings, absolutely fantastic!\"—@Rossany.fit"
+          }
+        },
+        "case_ANQhXj": {
+          "type": "case",
+          "settings": {
+            "title": "Shokz Are My Go-To Headphones",
+            "text": "\"I just love the fact that I can listen to my music and still be aware of my surroundings at all times during my runs. The battery life is good for how much I use them. I use them on my way to work, during work, while I workout/run and commute home. I don’t use any other headphones besides Shokz.\"— @Tom"
+          }
+        },
+        "case_3ymjpV": {
+          "type": "case",
+          "settings": {
+            "title": "Running to a New Beat",
+            "text": "\"I’m not typically a \"music while running\" type of person, but “Shok”ingly have been since I received those. I even ran a solo half marathon PR with them earlier this fall!\"—@Kelaigh"
+          }
+        }
+      },
+      "block_order": [
+        "case_JYbYCq",
+        "case_eB9yxR",
+        "case_ANQhXj",
+        "case_3ymjpV"
+      ],
+      "name": "Openear Sport Case",
+      "settings": {
+        "title": "Real Stories, Real Sound"
+      }
+    },
+    "openear_sport_athlete_yUdHby": {
+      "type": "openear-sport-athlete",
+      "blocks": {
+        "athlete_RhgwNa": {
+          "type": "athlete",
+          "settings": {
+            "name": "Eliud Kipchoge",
+            "badge": "Marathon World Record Holder",
+            "text": "\"These headphones give us the opportunity to enjoy music and be aware of our surroundings for our longest workouts.\"",
+            "product": "openrun-pro2",
+            "product_image": "shopify://shop_images/product-img.webp",
+            "image": "shopify://shop_images/pillar-page-influencer-1.webp",
+            "image_mb": "shopify://shop_images/pillar-page-influencer-1-mb.webp"
+          }
+        },
+        "athlete_YtEWdw": {
+          "type": "athlete",
+          "settings": {
+            "name": "Hellen Obiri",
+            "badge": "2024 & 2023 Boston Marathon – Female 1st Place",
+            "text": "\"I get more energy from the bass and the OpenRun Pro 2 are like my running partner. \"",
+            "product": "openrun-pro2",
+            "product_image": "shopify://shop_images/product-img.webp",
+            "image": "shopify://shop_images/pillar-page-influencer-4.webp",
+            "image_mb": "shopify://shop_images/pillar-page-influencer-4-mb_png.webp"
+          }
+        },
+        "athlete_WaGfrK": {
+          "type": "athlete",
+          "settings": {
+            "name": "Conner Mantz",
+            "badge": "American Half Marathon Record Holder",
+            "text": "\"Shokz keeps you safe with open-ear design—hear your music and the world around you.\"",
+            "product": "openrun-pro2",
+            "product_image": "shopify://shop_images/product-img.webp",
+            "image": "shopify://shop_images/pillar-page-influencer-3.webp",
+            "image_mb": "shopify://shop_images/pillar-page-influencer-3-mb_png.webp"
+          }
+        },
+        "athlete_3zBjLC": {
+          "type": "athlete",
+          "disabled": true,
+          "settings": {
+            "name": "Eliud Kipchoge",
+            "badge": "Marathon World Record Holder",
+            "text": "\"These headphones give us the opportunity to enjoy music and be aware of our surroundings for our longest workouts.\"",
+            "product": "openrun-pro2",
+            "product_image": "shopify://shop_images/product-img.webp",
+            "image": "shopify://shop_images/pillar-page-influencer-1.webp",
+            "image_mb": "shopify://shop_images/pillar-page-influencer-1-mb.webp"
+          }
+        }
+      },
+      "block_order": [
+        "athlete_RhgwNa",
+        "athlete_YtEWdw",
+        "athlete_WaGfrK",
+        "athlete_3zBjLC"
+      ],
+      "name": "Openear Sport Athlete",
+      "settings": {
+        "title": "Trusted by Athletes"
+      }
+    },
+    "openear_sport_honor_FTGenz": {
+      "type": "openear-sport-honor",
+      "blocks": {
+        "honor_7trVpC": {
+          "type": "honor",
+          "settings": {
+            "image": "shopify://shop_images/pillar-page-honor-1.webp"
+          }
+        },
+        "honor_QzbTrx": {
+          "type": "honor",
+          "settings": {
+            "image": "shopify://shop_images/pillar-page-honor-2.webp"
+          }
+        },
+        "honor_8V7qTE": {
+          "type": "honor",
+          "settings": {
+            "image": "shopify://shop_images/pillar-page-honor-3.webp"
+          }
+        },
+        "honor_qqjbxw": {
+          "type": "honor",
+          "settings": {
+            "image": "shopify://shop_images/pillar-page-honor-4.webp"
+          }
+        },
+        "honor_6KYdKh": {
+          "type": "honor",
+          "settings": {
+            "image": "shopify://shop_images/pillar-page-honor-5.webp"
+          }
+        },
+        "honor_mMhtkp": {
+          "type": "honor",
+          "settings": {
+            "image": "shopify://shop_images/pillar-page-honor-6.webp"
+          }
+        },
+        "honor_jjLLya": {
+          "type": "honor",
+          "settings": {
+            "image": "shopify://shop_images/pillar-page-honor-7.webp"
+          }
+        },
+        "honor_xhzK3E": {
+          "type": "honor",
+          "settings": {
+            "image": "shopify://shop_images/pillar-page-honor-8.webp"
+          }
+        },
+        "honor_FUMTCg": {
+          "type": "honor",
+          "settings": {
+            "image": "shopify://shop_images/pillar-page-honor-9.webp"
+          }
+        }
+      },
+      "block_order": [
+        "honor_7trVpC",
+        "honor_QzbTrx",
+        "honor_8V7qTE",
+        "honor_qqjbxw",
+        "honor_6KYdKh",
+        "honor_mMhtkp",
+        "honor_jjLLya",
+        "honor_xhzK3E",
+        "honor_FUMTCg"
+      ],
+      "name": "Openear Sport Honor",
+      "settings": {
+        "title": "Brand Honor"
+      }
+    },
+    "openear_sport_faq_apYVkL": {
+      "type": "openear-sport-faq",
+      "blocks": {
+        "faq_eaMpHp": {
+          "type": "faq",
+          "settings": {
+            "title": "Q1: Is the OpenRun Pro 2 a bone conduction headphone?",
+            "text": "Yes, the OpenRun Pro 2 is a bone conduction headphone. It features Shokz’s latest DualPitch™ technology, which perfectly combines bone conduction and air conduction drivers. The bone conduction driver accurately handles mid and high frequencies, while the air conduction driver delivers deep and powerful bass, effectively enhancing the overall sound quality."
+          }
+        },
+        "faq_Vxkre9": {
+          "type": "faq",
+          "settings": {
+            "title": "Q2: Do the headphones support aptX Low Latency (aptX LL) technology?",
+            "text": "aptX Low Latency (aptX LL) provides short-range wireless transmission for comfortable audio-video synchronization in video and gaming applications. Currently, our headphones do not support aptX Low Latency technology."
+          }
+        },
+        "faq_F4KVXU": {
+          "type": "faq",
+          "settings": {
+            "title": "Q3: Why can I still hear loud surrounding noise even though the headphones support noise reduction?",
+            "text": "Shokz headphones feature an open-ear design, allowing you to still hear your surrounding environment while wearing them, which is normal. Additionally, the noise reduction function is designed for the microphone, helping your voice to be heard more clearly during calls. If you hear background noise from the other person during a call, this is related to the noise reduction capability of their device."
+          }
+        },
+        "faq_chMtVW": {
+          "type": "faq",
+          "settings": {
+            "title": "Q4: Do Shokz headphones reduce wind noise?",
+            "text": "Currently, only the OpenRun Pro 2 features wind-noise reduction. By positioning the microphone in the optimal low-wind area and using internal structures to significantly block wind from entering the microphone, it ensures clear call quality even in windy conditions."
+          }
+        },
+        "faq_qU6yFA": {
+          "type": "faq",
+          "settings": {
+            "title": "Q5: Why is OpenRun rated IP67, while OpenRun Pro 2 has an IP55 rating?",
+            "text": "The difference is mainly due to structural design and product focus. OpenRun Pro 2 features the latest DualPitch™ technology and a dual-layer mesh design, which provides superior sound quality compared to OpenRun.\n\nExtensive customer research has shown that the IP55 water resistance is sufficient for daily sports and exercise activities, so you can use it with confidence. However, we do not recommend using the headphones in extreme environments such as hot springs or saunas, nor while swimming, showering, or running in heavy rain for extended periods."
+          }
+        },
+        "faq_XkXHq8": {
+          "type": "faq",
+          "settings": {
+            "title": "Q6: Can OpenSwim and OpenSwim Pro be used in seawater or swimming pools?",
+            "text": "According to the IEC 60529 “Ingress Protection (IP Code)” standard, OpenSwim and OpenSwim Pro have an IP68 waterproof rating.\n\nIP68: OpenSwim Pro can be submerged in water up to 2 meters deep for 2 hours and still function normally.\n\nHowever, they are not suitable for use in saunas or showers. High temperatures can accelerate headphone aging, and elements such as sulfur in sauna environments may degrade adhesives, affecting waterproof performance.\n\nOpenSwim Pro can be used in both seawater and swimming pools. To prevent corrosion from saltwater, it is recommended to rinse the headphones with fresh water after use.\n\nNote: During charging or data transfer, ensure the headphones and cables are dry to maintain proper device functionality and safety."
+          }
+        },
+        "faq_rBYyWy": {
+          "type": "faq",
+          "settings": {
+            "title": "Q7: Can Bluetooth mode be used while swimming?",
+            "text": "No, Bluetooth mode cannot be used underwater.\n\nBluetooth signals propagate well in air because air is almost transparent to these radio frequencies, allowing the signals to travel with minimal obstruction. However, water is a conductive medium and strongly absorbs radio waves, especially high-frequency signals. When radio waves enter water, their energy rapidly decreases, and the transmission distance is greatly reduced. This causes the signal strength to drop below the level required for effective communication, making stable connection and data transfer impossible.\n\nTherefore, we recommend using the MP3 mode of the swimming series headphones for underwater use."
+          }
+        }
+      },
+      "block_order": [
+        "faq_eaMpHp",
+        "faq_Vxkre9",
+        "faq_F4KVXU",
+        "faq_chMtVW",
+        "faq_qU6yFA",
+        "faq_XkXHq8",
+        "faq_rBYyWy"
+      ],
+      "name": "Openear Sport FAQ",
+      "settings": {
+        "style": "",
+        "title": "FAQ"
+      }
+    }
+  },
+  "order": [
+    "openear_sport_banner_q6fUGR",
+    "openear_sport_pain_point_3rX7rm",
+    "openear_sport_solution_hqXYV8",
+    "openear_sport_product_wKAnA7",
+    "openear_sport_compare_D9PUdz",
+    "openear_sport_case_zH3QLw",
+    "openear_sport_athlete_yUdHby",
+    "openear_sport_honor_FTGenz",
+    "openear_sport_faq_apYVkL"
+  ]
+}
