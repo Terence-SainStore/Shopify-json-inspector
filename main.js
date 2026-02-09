@@ -22,6 +22,7 @@ const fileBtn = document.getElementById("fileBtn");
 const clearBtn = document.getElementById("clearBtn");
 const fileMeta = document.getElementById("fileMeta");
 const cdnInput = document.getElementById("cdn");
+const zipNameInput = document.getElementById("zipName");
 const jsonPaste = document.getElementById("jsonPaste"); // Fixed missing reference
 const imagesEl = document.getElementById("images");
 const sectionsEl = document.getElementById("sections");
@@ -32,6 +33,7 @@ let lastStats = null;
 let lastImages = [];
 let lastSections = null;
 let templateTree = null;
+let lastTemplateName = "template.json";
 
 /* ================= Utils ================= */
 
@@ -73,6 +75,10 @@ function loadTemplateJson(raw, sourceLabel = "") {
   lastImages = parseImages(json);
   lastSections = parseSections(json);
   templateTree = parseTemplateTree(json, sourceLabel);
+  lastTemplateName = sourceLabel || "template.json";
+  if (zipNameInput) {
+    zipNameInput.placeholder = stripExt(lastTemplateName);
+  }
 
   // Hide initial empty state
   if (initialStateEl) initialStateEl.classList.add("hidden");
@@ -91,6 +97,10 @@ function clearAll() {
   if (jsonPaste) jsonPaste.value = "";
   fileMeta.textContent = "No file selected";
   cdnInput.value = "";
+  if (zipNameInput) {
+    zipNameInput.value = "";
+    zipNameInput.placeholder = "";
+  }
 
   // data
   lastImages = [];
@@ -169,6 +179,7 @@ cdnInput.addEventListener("input", () => {
 /* ================= Drag & Drop ================= */
 const dropZone = document.getElementById("dropZone");
 
+
 if (dropZone) {
   let dragCounter = 0;
 
@@ -209,4 +220,10 @@ if (dropZone) {
       showModal("Please drop a valid JSON file (.json)");
     }
   });
+}
+
+function stripExt(name) {
+  if (!name) return "";
+  const i = name.lastIndexOf(".");
+  return i > 0 ? name.slice(0, i) : name;
 }

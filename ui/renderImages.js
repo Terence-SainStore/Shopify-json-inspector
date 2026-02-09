@@ -68,9 +68,16 @@ export function renderImages(images, cdnPrefix) {
       downloadBtn.disabled = true;
       downloadBtn.textContent = "Downloading…";
 
+      const zipInput = document.getElementById("zipName");
+      const zipBase =
+        (zipInput?.value || "").trim() ||
+        (zipInput?.placeholder || "").trim() ||
+        "shopify-images";
+
       await downloadImages(
         images,
         cdnPrefix,
+        zipBase,
         updateDownloadProgress,
         showDownloadResult,
       );

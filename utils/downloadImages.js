@@ -3,11 +3,13 @@
  *
  * @param {string[]} images - 图片文件名数组
  * @param {string} cdnPrefix - CDN 前缀
+ * @param {string} zipBaseName - 压缩包基础文件名（不含 .zip）
  */
 import { showModal } from './showModal.js';
 export async function downloadImages(
   images,
   cdnPrefix,
+  zipBaseName,
   onProgress,
   onFinish
 ) {
@@ -83,7 +85,7 @@ export async function downloadImages(
 
   const link = document.createElement('a');
   link.href = URL.createObjectURL(content);
-  link.download = 'shopify-images.zip';
+  link.download = `${(zipBaseName || 'shopify-images').replace(/\.zip$/i, '')}.zip`;
   link.click();
 
   URL.revokeObjectURL(link.href);
