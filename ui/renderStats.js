@@ -5,16 +5,16 @@ export function renderStats(stats) {
   el.classList.remove("hidden");
 
   el.innerHTML = `
-    <h3>📊 Template Stats</h3>
+    <h3>📊 模板统计</h3>
 
     <div class="stats-grid">
       <div class="stat">
-        <span>Sections</span>
+        <span>版块数</span>
         <strong>${stats.sections.total}</strong>
       </div>
 
       <div class="stat ${stats.sections.ratio > 0.3 ? "is-danger" : ""}">
-        <span>Disabled Sections</span>
+        <span>已禁用版块</span>
         <strong>
           ${stats.sections.disabled}
           (${Math.round(stats.sections.ratio * 100)}%)
@@ -22,12 +22,12 @@ export function renderStats(stats) {
       </div>
 
       <div class="stat">
-        <span>Blocks</span>
+        <span>块数</span>
         <strong>${stats.blocks.total}</strong>
       </div>
 
       <div class="stat">
-        <span>Disabled Blocks</span>
+        <span>已禁用块</span>
         <strong>
           ${stats.blocks.disabled}
           (${Math.round(stats.blocks.ratio * 100)}%)
@@ -35,21 +35,21 @@ export function renderStats(stats) {
       </div>
 
       <div class="stat">
-        <span>Images</span>
+        <span>图片</span>
         <strong>
           ${stats.images.unique}
           <small style="font-weight:400;color:#6b7280">
-            (${stats.images.references} refs · ${stats.images.reused} reused)
+            (${stats.images.references} 次引用 · ${stats.images.reused} 复用)
           </small>
         </strong>
       </div>
 
       <div class="stat">
-        <span>Complexity</span>
+        <span>复杂度</span>
         <strong>
           ${stats.complexity.score}
           <span class="complexity-badge complexity-${stats.complexity.level.toLowerCase()}">
-            ${stats.complexity.level}
+            ${stats.complexity.level === "High" ? "高" : stats.complexity.level === "Medium" ? "中" : "低"}
           </span>
         </strong>
       </div>
@@ -59,7 +59,7 @@ export function renderStats(stats) {
     ${
       stats.signals.length
         ? `
-          <h4 class="stats-header-sm">⚠️ Migration Signals</h4>
+          <h4 class="stats-header-sm">⚠️ 迁移提示</h4>
           <div class="signals">
             ${stats.signals
               .map((s) => `<div class="signal">${s}</div>`)

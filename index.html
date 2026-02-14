@@ -1,13 +1,13 @@
 <!doctype html>
-<html lang="en">
+<html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
-    <title>Shopify Template Inspector</title>
+    <title>Shopify 模板检查器</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <header>
-      <h1>Shopify Template Inspector</h1>
+      <h1>Shopify 模板检查器</h1>
       <a href="https://github.com/terenzzzz" target="_blank">@Terence</a>
     </header>
 
@@ -16,46 +16,43 @@
       <section class="panel input">
         <!-- File picker -->
         <div class="file-picker">
-          <span class="label">Template JSON</span>
+          <span class="label">模板 JSON</span>
 
           <input type="file" id="jsonFile" accept=".json" hidden />
 
           <div class="file-actions">
-            <button class="file-btn" id="fileBtn">📄 Choose JSON file</button>
-            <button class="clear-btn" id="clearBtn">✕ Clear</button>
+            <button class="file-btn" id="fileBtn">📄 选择 JSON 文件</button>
+            <button class="clear-btn" id="clearBtn">✕ 清空</button>
           </div>
 
-          <div class="file-meta" id="fileMeta">No file selected</div>
+          <div class="file-meta" id="fileMeta">未选择文件</div>
 
-          <!-- ⭐ JSON Paste -->
           <textarea
             id="jsonPaste"
-            placeholder="Or paste template JSON here…"
+            placeholder="或在此粘贴模板 JSON…"
             rows="6"
             spellcheck="false"
           ></textarea>
         </div>
 
-        <!-- CDN -->
         <label class="field">
-          <span>CDN Prefix</span>
+          <span>CDN 前缀</span>
           <input
             type="text"
             id="cdn"
             placeholder="https://uk.shokz.com/cdn/shop/files/..."
           />
-          <small>Used for image download</small>
+          <small>用于图片下载时拼接地址</small>
         </label>
         
-        <!-- ZIP Name -->
         <label class="field">
-          <span>Output ZIP Name</span>
+          <span>导出 ZIP 名称</span>
           <input
             type="text"
             id="zipName"
             placeholder=""
           />
-          <small>JSON filename will be used by default.</small>
+          <small>不填则使用 JSON 文件名。</small>
         </label>
       </section>
 
@@ -63,11 +60,12 @@
       <section class="panel result">
         <div id="initialState" class="empty-state">
           <div class="empty-icon">📂</div>
-          <div class="empty-text">No Template Loaded</div>
-          <div class="empty-subtext">Select a JSON file or paste content to inspect.</div>
+          <div class="empty-text">未加载模板</div>
+          <div class="empty-subtext">选择 JSON 文件或粘贴内容以开始检查。</div>
         </div>
         <div id="stats" class="card hidden"></div>
         <div id="images" class="card hidden"></div>
+        <div id="videos" class="card hidden"></div>
         <div id="sections" class="hidden"></div>
       </section>
     </main>
@@ -80,58 +78,42 @@
       </div>
     </div>
 
-    <!-- Image Preview Modal -->
     <div id="imageModal" class="image-modal hidden">
       <div class="modal-content">
         <span id="modalClose" class="modal-close">&times;</span>
         <div class="modal-left">
-          <img id="modalImg" src="" alt="Preview" />
+          <img id="modalImg" src="" alt="预览" />
         </div>
         <div class="modal-right">
-          <h3>Image Details</h3>
-          
+          <h3>图片详情</h3>
           <div class="info-item">
-            <span class="info-label">File Name</span>
+            <span class="info-label">文件名</span>
             <div class="info-value" id="modalName"></div>
           </div>
-          
           <div class="info-item">
-            <span class="info-label">Dimensions</span>
+            <span class="info-label">尺寸</span>
             <div class="info-value" id="modalDimensions">-</div>
           </div>
-
           <div class="info-item">
-            <span class="info-label">File Size</span>
+            <span class="info-label">文件大小</span>
             <div class="info-value" id="modalSize"></div>
           </div>
-          
           <div class="info-item">
-            <span class="info-label">Source URL</span>
+            <span class="info-label">源地址</span>
             <div class="info-value" id="modalUrl"></div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- JSON Bubble -->
     <div id="jsonBubble" class="json-bubble hidden">
       <pre></pre>
     </div>
 
-    <!-- Generic Error Modal -->
-    <div id="modal-mask" class="modal-mask hidden">
-      <div class="modal">
-        <h3>Notice</h3>
-        <p id="modal-message"></p>
-        <button id="modal-confirm">OK</button>
-      </div>
-    </div>
-
-    <!-- Drop Zone -->
     <div id="dropZone" class="drop-zone hidden">
       <div class="drop-content">
         <div class="drop-icon">📂</div>
-        <div class="drop-text">Drop JSON file here</div>
+        <div class="drop-text">将 JSON 文件拖到此处</div>
       </div>
     </div>
 

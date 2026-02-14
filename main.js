@@ -1,10 +1,12 @@
 import { cleanJson } from "./parser/cleanJson.js";
 import { parseImages } from "./parser/parseImages.js";
+import { parseVideos } from "./parser/parseVideos.js";
 import { parseSections } from "./parser/parseSections.js";
 import { parseTemplateTree } from "./parser/parseTemplateTree.js";
 import { parseStats } from "./parser/parseStats.js";
 
 import { renderImages } from "./ui/renderImages.js";
+import { renderVideos } from "./ui/renderVideos.js";
 import { renderSections } from "./ui/renderSections.js";
 import { renderStats } from "./ui/renderStats.js";
 import { renderStructure } from "./ui/renderStructure.js";
@@ -25,12 +27,14 @@ const cdnInput = document.getElementById("cdn");
 const zipNameInput = document.getElementById("zipName");
 const jsonPaste = document.getElementById("jsonPaste"); // Fixed missing reference
 const imagesEl = document.getElementById("images");
+const videosEl = document.getElementById("videos");
 const sectionsEl = document.getElementById("sections");
 const initialStateEl = document.getElementById("initialState");
 
 /* ================= State ================= */
 let lastStats = null;
 let lastImages = [];
+let lastVideos = [];
 let lastSections = null;
 let templateTree = null;
 let lastTemplateName = "template.json";
@@ -67,12 +71,13 @@ function loadTemplateJson(raw, sourceLabel = "") {
     json = JSON.parse(cleanJson(raw));
   } catch (e) {
     console.error(e);
-    showModal("JSON parse failed: " + e.message);
+    showModal("JSON 解析失败：" + e.message);
     return;
   }
 
   lastStats = parseStats(json);
   lastImages = parseImages(json);
+  lastVideos = parseVideos(json);
   lastSections = parseSections(json);
   templateTree = parseTemplateTree(json, sourceLabel);
   lastTemplateName = sourceLabel || "template.json";
@@ -85,6 +90,7 @@ function loadTemplateJson(raw, sourceLabel = "") {
 
   renderStats(lastStats);
   renderImages(lastImages, normalizeCdn(cdnInput.value));
+  renderVideos(lastVideos, normalizeCdn(cdnInput.value));
   renderSections(lastSections);
   renderStructure(templateTree);
 }
@@ -95,7 +101,7 @@ function clearAll() {
   // inputs
   fileInput.value = "";
   if (jsonPaste) jsonPaste.value = "";
-  fileMeta.textContent = "No file selected";
+  fileMeta.textContent = "未选择文件";
   cdnInput.value = "";
   if (zipNameInput) {
     zipNameInput.value = "";
@@ -104,14 +110,17 @@ function clearAll() {
 
   // data
   lastImages = [];
+  lastVideos = [];
   lastSections = null;
   templateTree = null;
 
   // UI
   imagesEl.classList.add("hidden");
+  if (videosEl) videosEl.classList.add("hidden");
   sectionsEl.classList.add("hidden");
   if (initialStateEl) initialStateEl.classList.remove("hidden");
   imagesEl.innerHTML = "";
+  if (videosEl) videosEl.innerHTML = "";
   sectionsEl.innerHTML = "";
   
   const statsEl = document.getElementById("stats");
@@ -157,9 +166,9 @@ if (jsonPaste) {
 
       // Paste priority, clear file
       fileInput.value = "";
-      fileMeta.textContent = "Pasted JSON";
+      fileMeta.textContent = "已粘贴 JSON";
 
-      loadTemplateJson(raw, "pasted.json");
+      loadTemplateJson(raw, "粘贴.json");
     }, 300);
   });
 }
@@ -168,11 +177,13 @@ if (jsonPaste) {
 
 let cdnTimer;
 cdnInput.addEventListener("input", () => {
-  if (!lastImages.length) return;
+  if (!lastImages.length && !lastVideos.length) return;
 
   clearTimeout(cdnTimer);
   cdnTimer = setTimeout(() => {
-    renderImages(lastImages, normalizeCdn(cdnInput.value));
+    const cdn = normalizeCdn(cdnInput.value);
+    renderImages(lastImages, cdn);
+    renderVideos(lastVideos, cdn);
   }, 300);
 });
 
@@ -217,7 +228,7 @@ if (dropZone) {
       const raw = await file.text();
       loadTemplateJson(raw, file.name);
     } else {
-      showModal("Please drop a valid JSON file (.json)");
+      showModal("请拖入有效的 JSON 文件（.json）");
     }
   });
 }

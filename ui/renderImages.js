@@ -9,13 +9,13 @@ export function renderImages(images, cdnPrefix) {
   if (images.length === 0) {
     imagesEl.innerHTML = `
       <h3>
-        <span>🖼 Images</span>
+        <span>🖼 图片</span>
         <span>0</span>
       </h3>
       <div class="empty-state">
         <div class="empty-icon">🖼️</div>
-        <div class="empty-text">No Images Found</div>
-        <div class="empty-subtext">This template does not appear to contain any image references.</div>
+        <div class="empty-text">未发现图片</div>
+        <div class="empty-subtext">该模板中未检测到图片引用。</div>
       </div>
     `;
     return;
@@ -23,7 +23,7 @@ export function renderImages(images, cdnPrefix) {
 
   imagesEl.innerHTML = `
     <h3>
-      <span>🖼 Images</span>
+      <span>🖼 图片</span>
       <span>${images.length}</span>
     </h3>
 
@@ -48,7 +48,7 @@ export function renderImages(images, cdnPrefix) {
         .join("")}
     </div>
 
-    <button id="download">Download ZIP</button>
+    <button id="download">打包下载 ZIP</button>
 
     <div id="download-progress" class="progress-wrapper hidden">
       <div class="progress-info">
@@ -66,7 +66,7 @@ export function renderImages(images, cdnPrefix) {
   if (downloadBtn) {
     downloadBtn.onclick = async () => {
       downloadBtn.disabled = true;
-      downloadBtn.textContent = "Downloading…";
+      downloadBtn.textContent = "下载中…";
 
       const zipInput = document.getElementById("zipName");
       const zipBase =
@@ -83,7 +83,7 @@ export function renderImages(images, cdnPrefix) {
       );
 
       downloadBtn.disabled = false;
-      downloadBtn.textContent = "Download ZIP";
+      downloadBtn.textContent = "打包下载 ZIP";
     };
   }
 
@@ -105,8 +105,8 @@ function setupImageModal() {
   document.querySelectorAll(".preview-img").forEach(img => {
     img.onclick = async () => {
       modalName.textContent = img.dataset.name || "";
-      modalSize.textContent = "Loading…";
-      if (modalDimensions) modalDimensions.textContent = "Loading…";
+      modalSize.textContent = "加载中…";
+      if (modalDimensions) modalDimensions.textContent = "加载中…";
       modalUrl.innerHTML = `<a href="${img.src}" target="_blank" rel="noopener noreferrer">${img.src}</a>`;
 
       modal.classList.remove("hidden");
@@ -121,7 +121,7 @@ function setupImageModal() {
         const blob = await res.blob();
         modalSize.textContent = `${(blob.size / 1024).toFixed(1)} KB`;
       } catch (e) {
-        modalSize.textContent = "Unknown";
+        modalSize.textContent = "未知";
       }
 
       const tempImg = new Image();
@@ -175,7 +175,7 @@ function updateDownloadProgress(done, total) {
   const percent = Math.round((done / total) * 100);
 
   bar.style.width = `${percent}%`;
-  text.textContent = `Progress: ${done} / ${total}`;
+  text.textContent = `进度：${done} / ${total}`;
 }
 
 function showDownloadResult(success, failed) {
@@ -183,10 +183,10 @@ function showDownloadResult(success, failed) {
   if (!resultEl) return;
 
   if (failed > 0) {
-    resultEl.textContent = `Finished: ${success} success, ${failed} failed`;
+    resultEl.textContent = `完成：成功 ${success} 个，失败 ${failed} 个`;
     resultEl.className = "error-text";
   } else {
-    resultEl.textContent = `Finished: ${success} images`;
+    resultEl.textContent = `完成：共 ${success} 张图片`;
     resultEl.className = "success-text";
   }
 }

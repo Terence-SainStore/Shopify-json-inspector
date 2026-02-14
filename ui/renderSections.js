@@ -10,7 +10,7 @@ export function renderSections(sections) {
     ? `
       <div class="empty-state is-embedded">
         <div class="empty-icon">🧩</div>
-        <div class="empty-text">No Sections Found</div>
+        <div class="empty-text">未发现版块</div>
       </div>
     `
     : `
@@ -33,7 +33,7 @@ export function renderSections(sections) {
       <!-- 左：Sections 统计 -->
       <div class="card">
         <h3>
-          <span>🧩 Sections</span>
+          <span>🧩 版块</span>
           <span>${total}</span>
         </h3>
 
@@ -43,7 +43,7 @@ export function renderSections(sections) {
       <!-- 右：Structure -->
       <div class="card">
         <h3>
-          <span>🌳 Structure</span>
+          <span>🌳 结构</span>
         </h3>
 
         <div id="structure"></div>

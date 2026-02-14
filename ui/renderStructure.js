@@ -8,7 +8,7 @@ export function renderStructure(tree) {
     el.innerHTML = `
       <div class="empty-state is-embedded">
         <div class="empty-icon">🌳</div>
-        <div class="empty-text">No Structure Found</div>
+        <div class="empty-text">未发现结构</div>
       </div>
     `;
     return;
@@ -18,8 +18,8 @@ export function renderStructure(tree) {
 
   el.innerHTML = `
     <div class="tree-toolbar">
-      <button id="expandAll" class="text-btn">Expand All</button>
-      <button id="collapseAll" class="text-btn">Collapse All</button>
+      <button id="expandAll" class="text-btn">全部展开</button>
+      <button id="collapseAll" class="text-btn">全部折叠</button>
     </div>
     <ul class="structure-tree tree-root">${treeHtml}</ul>
   `;

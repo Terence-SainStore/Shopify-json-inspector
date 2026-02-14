@@ -130,22 +130,22 @@ function buildSignals({
   const signals = [];
 
   if (disabledSectionRatio > 0.3)
-    signals.push('High disabled section ratio');
+    signals.push('已禁用版块占比过高');
 
   if (disabledBlockRatio > 0.4)
-    signals.push('Many disabled blocks');
+    signals.push('已禁用块较多');
 
   if (imageStats.references > 40)
-    signals.push('Heavy image usage');
+    signals.push('图片引用较多');
 
   if (imageStats.reused > imageStats.unique * 0.4)
-    signals.push('High image reuse coupling');
+    signals.push('图片复用耦合较高');
 
   if (sectionCount > 18)
-    signals.push('Too many sections');
+    signals.push('版块数量过多');
 
   if (blockCount > 50)
-    signals.push('Complex block structure');
+    signals.push('块结构较复杂');
 
   return signals;
 }
