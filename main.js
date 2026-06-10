@@ -12,6 +12,7 @@ import { renderStats } from "./ui/renderStats.js";
 import { renderStructure } from "./ui/renderStructure.js";
 import { initJsonBubble } from "./ui/jsonBubble.js";
 import { initModal, showModal } from "./utils/showModal.js";
+import { normalizeCdn } from "./utils/normalizeCdn.js";
 
 /* ================= Init ================= */
 initModal();
@@ -38,29 +39,6 @@ let lastVideos = [];
 let lastSections = null;
 let templateTree = null;
 let lastTemplateName = "template.json";
-
-/* ================= Utils ================= */
-
-/**
- * Normalize CDN input
- * Supports:
- * - CDN prefix
- * - CDN prefix/
- * - Full image URL (including ?v=)
- */
-function normalizeCdn(prefix) {
-  if (!prefix) return "";
-
-  // Remove trailing slashes
-  prefix = prefix.replace(/\/+$/, "");
-
-  // If not ending with /files, append it
-  if (!prefix.endsWith("/files")) {
-    prefix += "/files";
-  }
-
-  return prefix + "/";
-}
 
 /* ================= Core Loader ================= */
 
@@ -177,7 +155,7 @@ if (jsonPaste) {
 
 let cdnTimer;
 cdnInput.addEventListener("input", () => {
-  if (!lastImages.length && !lastVideos.length) return;
+  if (!lastImages?.length && !lastVideos?.length) return;
 
   clearTimeout(cdnTimer);
   cdnTimer = setTimeout(() => {

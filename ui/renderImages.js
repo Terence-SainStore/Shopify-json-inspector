@@ -1,12 +1,67 @@
 import { downloadImages } from "../utils/downloadImages.js";
+import {
+  renderMediaFilters,
+  filterMediaGroups,
+  setupMediaFilters,
+  flattenMediaItems,
+  getDownloadButtonLabel,
+  getMediaFilterState,
+} from "./mediaFilters.js";
 
-export function renderImages(images, cdnPrefix) {
+function countItems(groups) {
+  return groups.reduce((sum, g) => sum + g.items.length, 0);
+}
+
+function renderImageGrid(items, cdnPrefix) {
+  return items
+    .map((name) => {
+      const src = cdnPrefix ? `${cdnPrefix}/${name}` : "";
+      return `
+        <div class="image-item">
+          <div class="thumb">
+            ${
+              src
+                ? `<img src="${src}" loading="lazy" data-name="${name}" class="preview-img"
+                    onerror="this.style.display='none'" />`
+                : ""
+            }
+          </div>
+          <div class="name">${name}</div>
+        </div>
+      `;
+    })
+    .join("");
+}
+
+function renderImageGroups(groups, cdnPrefix) {
+  if (groups.length === 0) {
+    return `<div class="media-filter-empty">没有符合条件的图片</div>`;
+  }
+
+  return groups
+    .map((group) => {
+      const titleClass = group.disabled
+        ? "media-section-title is-disabled"
+        : "media-section-title";
+      return `
+        <div class="media-section-group">
+          <h4 class="${titleClass}">${group.sectionId} (${group.sectionType})</h4>
+          <div class="image-grid">
+            ${renderImageGrid(group.items, cdnPrefix)}
+          </div>
+        </div>
+      `;
+    })
+    .join("");
+}
+
+export function renderImages(groups, cdnPrefix) {
   const imagesEl = document.getElementById("images");
-  if (!images || !imagesEl) return;
+  if (!groups || !imagesEl) return;
 
   imagesEl.classList.remove("hidden");
 
-  if (images.length === 0) {
+  if (groups.length === 0) {
     imagesEl.innerHTML = `
       <h3>
         <span>🖼 图片</span>
@@ -21,31 +76,18 @@ export function renderImages(images, cdnPrefix) {
     return;
   }
 
+  const totalCount = countItems(groups);
+
   imagesEl.innerHTML = `
     <h3>
       <span>🖼 图片</span>
-      <span>${images.length}</span>
+      <span id="images-count">${totalCount}</span>
     </h3>
 
-    <div class="image-grid">
-      ${images
-        .map((name) => {
-          const src = cdnPrefix ? `${cdnPrefix}/${name}` : "";
-          return `
-            <div class="image-item">
-              <div class="thumb">
-                ${
-                  src
-                    ? `<img src="${src}" loading="lazy" data-name="${name}" class="preview-img"
-                        onerror="this.style.display='none'" />`
-                    : ""
-                }
-              </div>
-              <div class="name">${name}</div>
-            </div>
-          `;
-        })
-        .join("")}
+    ${renderMediaFilters("images")}
+
+    <div id="images-groups">
+      ${renderImageGroups(groups, cdnPrefix)}
     </div>
 
     <button id="download">打包下载 ZIP</button>
@@ -61,10 +103,39 @@ export function renderImages(images, cdnPrefix) {
     </div>
   `;
 
-  // 下载按钮
+  const groupsContainer = document.getElementById("images-groups");
+  const countEl = document.getElementById("images-count");
   const downloadBtn = document.getElementById("download");
+
+  const updateDownloadLabel = (filterState) => {
+    if (downloadBtn) {
+      downloadBtn.textContent = getDownloadButtonLabel(filterState);
+    }
+  };
+
+  const applyFilter = (filterState) => {
+    const filtered = filterMediaGroups(
+      groups,
+      filterState.enabledOnly,
+      filterState.disabledOnly,
+    );
+    if (groupsContainer) {
+      groupsContainer.innerHTML = renderImageGroups(filtered, cdnPrefix);
+      bindPreviewClicks();
+    }
+    if (countEl) {
+      countEl.textContent = String(countItems(filtered));
+    }
+    updateDownloadLabel(filterState);
+  };
+
+  setupMediaFilters("images", applyFilter);
+
   if (downloadBtn) {
     downloadBtn.onclick = async () => {
+      const filterState = getMediaFilterState("images");
+      const label = getDownloadButtonLabel(filterState);
+
       downloadBtn.disabled = true;
       downloadBtn.textContent = "下载中…";
 
@@ -74,8 +145,15 @@ export function renderImages(images, cdnPrefix) {
         (zipInput?.placeholder || "").trim() ||
         "shopify-images";
 
+      const filteredGroups = filterMediaGroups(
+        groups,
+        filterState.enabledOnly,
+        filterState.disabledOnly,
+      );
+      const imagesToDownload = flattenMediaItems(filteredGroups);
+
       await downloadImages(
-        images,
+        imagesToDownload,
         cdnPrefix,
         zipBase,
         updateDownloadProgress,
@@ -83,26 +161,25 @@ export function renderImages(images, cdnPrefix) {
       );
 
       downloadBtn.disabled = false;
-      downloadBtn.textContent = "打包下载 ZIP";
+      downloadBtn.textContent = label;
     };
   }
 
-  // 图片预览 Modal
-  setupImageModal();
+  bindPreviewClicks();
+  bindModalHandlers();
 }
 
-function setupImageModal() {
+function bindPreviewClicks() {
   const modal = document.getElementById("imageModal");
   const modalImg = document.getElementById("modalImg");
   const modalName = document.getElementById("modalName");
   const modalSize = document.getElementById("modalSize");
   const modalUrl = document.getElementById("modalUrl");
   const modalDimensions = document.getElementById("modalDimensions");
-  const modalClose = document.getElementById("modalClose");
 
   if (!modal || !modalImg) return;
 
-  document.querySelectorAll(".preview-img").forEach(img => {
+  document.querySelectorAll("#images-groups .preview-img").forEach((img) => {
     img.onclick = async () => {
       modalName.textContent = img.dataset.name || "";
       modalSize.textContent = "加载中…";
@@ -137,29 +214,36 @@ function setupImageModal() {
         modalImg.style.opacity = "1";
       };
       tempImg.src = img.src;
-
     };
   });
+}
 
-  // 关闭 Modal
+let modalHandlersBound = false;
+
+function bindModalHandlers() {
+  if (modalHandlersBound) return;
+  modalHandlersBound = true;
+
+  const modal = document.getElementById("imageModal");
+  const modalImg = document.getElementById("modalImg");
+  const modalClose = document.getElementById("modalClose");
+
+  if (!modal || !modalImg) return;
+
+  const closeModal = () => {
+    modal.classList.add("hidden");
+    modalImg.src = "";
+    modalImg.style.opacity = "0";
+    const modalLeft = modal.querySelector(".modal-left");
+    if (modalLeft) modalLeft.classList.remove("is-loading");
+  };
+
   if (modalClose) {
-    modalClose.onclick = () => {
-      modal.classList.add("hidden");
-      modalImg.src = "";
-      modalImg.style.opacity = "0";
-      const modalLeft = modal.querySelector(".modal-left");
-      if (modalLeft) modalLeft.classList.remove("is-loading");
-    };
+    modalClose.onclick = closeModal;
   }
 
   modal.onclick = (e) => {
-    if (e.target === modal) {
-      modal.classList.add("hidden");
-      modalImg.src = "";
-      modalImg.style.opacity = "0";
-      const modalLeft = modal.querySelector(".modal-left");
-      if (modalLeft) modalLeft.classList.remove("is-loading");
-    }
+    if (e.target === modal) closeModal();
   };
 }
 

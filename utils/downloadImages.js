@@ -6,6 +6,7 @@
  * @param {string} zipBaseName - 压缩包基础文件名（不含 .zip）
  */
 import { showModal } from './showModal.js';
+import { normalizeCdn } from './normalizeCdn.js';
 export async function downloadImages(
   images,
   cdnPrefix,
@@ -18,7 +19,7 @@ export async function downloadImages(
     return;
   }
 
-  cdnPrefix = normalizeCdnPrefix(cdnPrefix);
+  cdnPrefix = normalizeCdn(cdnPrefix);
 
   const zip = new JSZip();
   const folder = zip.folder('images');
@@ -91,22 +92,6 @@ export async function downloadImages(
   URL.revokeObjectURL(link.href);
 
   onFinish?.(success, failed);
-}
-
-
-
-function normalizeCdnPrefix(prefix) {
-  if (!prefix) return '';
-
-  // 去掉末尾所有 /
-  prefix = prefix.replace(/\/+$/, '');
-
-  // 如果结尾不是 /files，则补上
-  if (!prefix.endsWith('/files')) {
-    prefix += '/files';
-  }
-
-  return prefix + '/';
 }
 
 function getExtFromFilename(filename) {
