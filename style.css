@@ -222,6 +222,10 @@ button:active {
   margin-bottom: 24px;
 }
 
+.field span small {
+  display: inline-block;
+}
+
 /* Cards */
 .card {
   background: var(--bg-card);
@@ -262,6 +266,56 @@ button:active {
 
 .ok { color: var(--success); }
 .err { color: var(--danger); }
+
+/* Media section groups & filters */
+.media-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin: 8px 0 16px;
+}
+
+.media-filter {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--text-muted);
+  cursor: pointer;
+  user-select: none;
+}
+
+.media-filter input {
+  cursor: pointer;
+}
+
+.media-section-group {
+  margin-bottom: 24px;
+}
+
+.media-section-group:last-child {
+  margin-bottom: 0;
+}
+
+.media-section-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-main);
+  margin: 0 0 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+.media-section-title.is-disabled {
+  color: var(--text-light);
+  text-decoration: line-through;
+}
+
+.media-filter-empty {
+  font-size: 13px;
+  color: var(--text-muted);
+  padding: 12px 0;
+}
 
 /* Image Grid */
 .image-grid {
