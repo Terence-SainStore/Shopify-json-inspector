@@ -154,7 +154,14 @@ async function loadCdnHistory() {
   try {
     const stored = await dbGet(CDN_HISTORY_KEY);
     if (Array.isArray(stored)) {
-      cdnHistory = stored.filter((v) => typeof v === "string" && v.trim());
+      cdnHistory = [
+        ...new Set(
+          stored
+            .filter((value) => typeof value === "string")
+            .map(normalizeCdnDomain)
+            .filter(Boolean),
+        ),
+      ];
     } else {
       cdnHistory = [];
     }
@@ -166,7 +173,7 @@ async function loadCdnHistory() {
 }
 
 async function saveCdnToHistory(rawInput) {
-  const normalized = normalizeCdn(rawInput);
+  const normalized = normalizeCdnDomain(rawInput);
   if (!normalized) return;
   const next = [normalized, ...cdnHistory.filter((item) => item !== normalized)].slice(
     0,
@@ -197,24 +204,26 @@ async function deleteCdnHistoryItem(value) {
 /* ================= Utils ================= */
 
 /**
- * Normalize CDN input
- * Supports:
- * - CDN prefix
- * - CDN prefix/
- * - Full image URL (including ?v=)
+ * 从域名或完整 CDN 地址中提取域名。
  */
-function normalizeCdn(prefix) {
-  if (!prefix) return "";
+function normalizeCdnDomain(input) {
+  const value = String(input || "").trim();
+  if (!value) return "";
 
-  // Remove trailing slashes
-  prefix = prefix.replace(/\/+$/, "");
-
-  // If not ending with /files, append it
-  if (!prefix.endsWith("/files")) {
-    prefix += "/files";
+  try {
+    const url = new URL(/^https?:\/\//i.test(value) ? value : `https://${value}`);
+    return url.host.toLowerCase();
+  } catch {
+    return "";
   }
+}
 
-  return prefix + "/";
+/** 根据域名生成 Shopify 文件 CDN 前缀。 */
+function normalizeCdn(input) {
+  const domain = normalizeCdnDomain(input);
+  if (!domain) return "";
+
+  return `https://${domain}/cdn/shop/files/`;
 }
 
 /* ================= Core Loader ================= */
@@ -349,10 +358,14 @@ cdnInput.addEventListener("input", () => {
 });
 
 cdnInput.addEventListener("change", () => {
+  const domain = normalizeCdnDomain(cdnInput.value);
+  if (domain) cdnInput.value = domain;
   saveCdnToHistory(cdnInput.value);
 });
 
 cdnInput.addEventListener("blur", () => {
+  const domain = normalizeCdnDomain(cdnInput.value);
+  if (domain) cdnInput.value = domain;
   saveCdnToHistory(cdnInput.value);
   setTimeout(() => {
     hideCdnHistoryMenu();

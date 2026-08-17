@@ -195,6 +195,13 @@ async function runImageDownload(imagesToDownload, cdnPrefix, btn, defaultLabel) 
   btn.disabled = true;
   btn.textContent = "下载中…";
   setResumeDownloadVisible(false);
+  const resultEl = document.getElementById("progress-result");
+  const issuesEl = document.getElementById("download-issues");
+  if (resultEl) resultEl.textContent = "";
+  if (issuesEl) {
+    issuesEl.replaceChildren();
+    issuesEl.classList.add("hidden");
+  }
 
   try {
     await downloadImages(
@@ -382,6 +389,7 @@ export function renderImages(images, cdnPrefix) {
         <span id="progress-text">0 / 0</span>
         <span id="progress-result"></span>
       </div>
+      <div id="download-issues" class="download-issues hidden"></div>
       <div class="progress-track">
         <div id="progress-bar" class="progress-bar"></div>
       </div>
@@ -494,6 +502,7 @@ function updateDownloadProgress(done, total) {
 
 function showDownloadResult(success, failed, meta = {}) {
   const resultEl = document.getElementById("progress-result");
+  const issuesEl = document.getElementById("download-issues");
   if (!resultEl) return;
 
   const parts = [];
@@ -512,6 +521,10 @@ function showDownloadResult(success, failed, meta = {}) {
     parts.push("（已导出部分图片）");
   }
 
+  if (meta.notFound?.length) {
+    parts.push(`已跳过 ${meta.notFound.length} 张已删除图片（404）`);
+  }
+
   if (meta.mode === "original") {
     parts.push("（原图模式）");
     if (meta.unresolved?.length) {
@@ -520,5 +533,31 @@ function showDownloadResult(success, failed, meta = {}) {
   }
 
   resultEl.textContent = parts.join(" ");
+
+  if (issuesEl) {
+    issuesEl.replaceChildren();
+    const urls = meta.notFoundUrls || [];
+    issuesEl.classList.toggle("hidden", urls.length === 0);
+
+    if (urls.length > 0) {
+      const title = document.createElement("strong");
+      title.textContent = "存在问题的图片 URL";
+      issuesEl.appendChild(title);
+
+      const list = document.createElement("ul");
+      urls.forEach((url) => {
+        const item = document.createElement("li");
+        const link = document.createElement("a");
+        link.href = url;
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+        link.textContent = url;
+        item.appendChild(link);
+        list.appendChild(item);
+      });
+      issuesEl.appendChild(list);
+    }
+  }
+
   updateResumeDownloadButton();
 }

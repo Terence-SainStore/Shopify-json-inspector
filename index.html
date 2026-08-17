@@ -45,24 +45,26 @@
         </div>
 
         <label class="field">
-          <span>CDN 前缀</span>
+          <span>CDN 域名</span>
           <div class="cdn-input-wrap">
             <input
               type="text"
               id="cdn"
               autocomplete="off"
-              placeholder="https://uk.shokz.com/cdn/shop/files/"
+              inputmode="url"
+              spellcheck="false"
+              placeholder="请输入店铺域名"
             />
             <div id="cdnHistoryMenu" class="cdn-history-menu hidden"></div>
           </div>
-          <small>用于预览与 CDN 模式下载（非原图）</small>
+          <small>只需输入域名，将自动生成 https://域名/cdn/shop/files/</small>
         </label>
 
-        <label class="field">
+        <label class="field hidden">
           <span>原图下载 (暂未支持)</span>
         </label>
 
-        <div class="field-group">
+        <div class="field-group hidden">
           <label class="field">
             <span>店铺域名</span>
             <input

@@ -32,6 +32,8 @@ let currentDownloadSession = null;
  * @property {string[]} pending
  * @property {Map<string, { url: string }>} originalSources
  * @property {string[]} unresolved
+ * @property {string[]} notFound
+ * @property {Map<string, string>} notFoundUrls
  */
 
 export function canResumeDownload() {
@@ -91,6 +93,8 @@ function createDownloadSession(images, cdnPrefix, zipBaseName, options) {
     pending: images.map(normalizeImageName),
     originalSources: new Map(),
     unresolved: [],
+    notFound: [],
+    notFoundUrls: new Map(),
   };
 }
 
@@ -102,12 +106,14 @@ async function runDownloadSession(session, onProgress, onFinish) {
     if (!ready) return;
     await resolvePendingOriginalSources(session, onProgress);
   } else if (!session.cdnPrefix) {
-    showModal('请先填写 CDN Prefix');
+    showModal('请先填写 CDN 域名');
     return;
   }
 
   const pending = [...session.pending];
-  const retryablePending = pending.filter((name) => !session.unresolved.includes(name));
+  const retryablePending = pending.filter(
+    (name) => !session.unresolved.includes(name) && !session.notFound.includes(name)
+  );
 
   for (const name of retryablePending) {
     try {
@@ -118,6 +124,15 @@ async function runDownloadSession(session, onProgress, onFinish) {
       session.completed.set(name, entry);
       session.pending = session.pending.filter((item) => item !== name);
     } catch (error) {
+      if (isNotFoundError(error) && !session.notFound.includes(name)) {
+        session.notFound.push(name);
+        session.notFoundUrls.set(
+          name,
+          mode === 'original'
+            ? session.originalSources.get(name)?.url || name
+            : buildDownloadUrl(normalizeCdnPrefix(session.cdnPrefix), name)
+        );
+      }
       console.warn('❌ 图片下载失败:', name, error);
     } finally {
       onProgress?.(session.images.length - session.pending.length, session.images.length);
@@ -126,7 +141,9 @@ async function runDownloadSession(session, onProgress, onFinish) {
 
   const success = session.completed.size;
   const failed = session.pending.length;
-  const canRetry = session.pending.some((name) => !session.unresolved.includes(name));
+  const canRetry = session.pending.some(
+    (name) => !session.unresolved.includes(name) && !session.notFound.includes(name)
+  );
 
   if (failed === 0) {
     const zip = buildZipFromSession(session);
@@ -136,15 +153,19 @@ async function runDownloadSession(session, onProgress, onFinish) {
     return;
   }
 
-  if (!canRetry && success > 0) {
-    const zip = buildZipFromSession(session);
-    await saveZip(zip, session.zipBaseName);
+  if (!canRetry) {
+    if (success > 0) {
+      const zip = buildZipFromSession(session);
+      await saveZip(zip, session.zipBaseName);
+    }
     clearDownloadSession();
     onFinish?.(success, failed, {
       mode,
       canResume: false,
-      partial: true,
+      partial: success > 0,
       unresolved: [...session.unresolved],
+      notFound: [...session.notFound],
+      notFoundUrls: [...session.notFoundUrls.values()],
     });
     return;
   }
@@ -154,6 +175,8 @@ async function runDownloadSession(session, onProgress, onFinish) {
     canResume: canRetry,
     failedNames: [...session.pending],
     unresolved: [...session.unresolved],
+    notFound: [...session.notFound],
+    notFoundUrls: [...session.notFoundUrls.values()],
   });
 }
 
@@ -229,7 +252,7 @@ async function fetchOriginalImageEntry(session, name) {
   }
 
   const res = await fetch(source.url);
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  if (!res.ok) throw createHttpError(res.status);
   const blob = await res.blob();
 
   return {
@@ -292,6 +315,8 @@ function encodePathSegment(filename) {
 async function fetchBestQualityBlob(cdnPrefix, name, accept, expectedMime) {
   const urls = buildDownloadUrlCandidates(cdnPrefix, name);
   let bestBlob = null;
+  const responseStatuses = [];
+  let hasNetworkFailure = false;
 
   for (const url of urls) {
     try {
@@ -301,7 +326,10 @@ async function fetchBestQualityBlob(cdnPrefix, name, accept, expectedMime) {
           'Cache-Control': 'no-transform',
         },
       });
-      if (!res.ok) continue;
+      if (!res.ok) {
+        responseStatuses.push(res.status);
+        continue;
+      }
 
       const blob = await res.blob();
       if (!bestBlob || isBetterBlob(blob, bestBlob, expectedMime)) {
@@ -311,11 +339,30 @@ async function fetchBestQualityBlob(cdnPrefix, name, accept, expectedMime) {
       if (expectedMime && blob.type === expectedMime) {
         return blob;
       }
-    } catch {}
+    } catch {
+      hasNetworkFailure = true;
+    }
   }
 
-  if (!bestBlob) throw new Error('fetch failed');
+  if (!bestBlob) {
+    const onlyNotFound =
+      responseStatuses.length > 0 &&
+      responseStatuses.every((status) => status === 404) &&
+      !hasNetworkFailure;
+    if (onlyNotFound) throw createHttpError(404);
+    throw new Error('fetch failed');
+  }
   return bestBlob;
+}
+
+function createHttpError(status) {
+  const error = new Error(`HTTP ${status}`);
+  error.status = status;
+  return error;
+}
+
+function isNotFoundError(error) {
+  return error?.status === 404;
 }
 
 /** 优先带 width/format 的 URL，再回退到无参数直链 */

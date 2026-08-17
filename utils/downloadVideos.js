@@ -79,7 +79,7 @@ export async function downloadVideos(
   onFinish
 ) {
   if (!cdnPrefix) {
-    showModal("请先填写 CDN Prefix");
+    showModal("请先填写 CDN 域名");
     return;
   }
 
